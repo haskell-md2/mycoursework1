@@ -1,3 +1,5 @@
-# mycoursework1
-Программная имитация колебания струны от пианино
-https://haskell-md2.github.io/mycoursework1/main.
+# Курсовая работа 1 / Математическая модель
+Программная имитация колебания струны от пианино.
+
+
+ссылка для перехода в приложение: https://haskell-md2.github.io/mycoursework1/main.
