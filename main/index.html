@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Имитация струны</title>
+    <link rel="icon" type="image/x-icon" href="/main/files/piano-icon.ico">
+
+    <link rel="stylesheet" href="piano.css">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:wght@200&family=Poor+Story&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+
+<div class="content">
+
+    <div class="col">
+
+        <div class="win" id="win-f">
+            <div class="str-w">
+                <div class="str">
+                    Длина струны: <input id="len" value="100" type="number"> см
+                </div>
+                <div class="str">
+                    Диаметр сечения: <input id="d" value="0.98" type="number" step="0.01"> мм
+                </div>
+                <div class="str">
+                    Диаметр вирбели: <input id="virb-d" value="10" type="number"> мм
+                </div>
+            </div>
+        </div>
+
+        <div class="win" id="win-m">
+            <div class="str-w">
+                <div class="str">
+                    Материал: <select name="" id="material"> 
+                        <option value="st">Сталь</option>
+                        <option value="al">Аллюминий</option>
+                        <option value="me">Медь</option>
+                    </select>
+                </div>
+                <div class="str">
+                    Предел прочности: <input id="limit-strength" value="600" type="number"> МПа
+                </div>
+                <div class="str">
+                    Плотность материала: <input id="density" value="7.8" type="number" step="0.1"> г/см³
+                </div>
+
+                <div class="str">
+                    Модуль Юнга: <input id="yng" value="200" type="number" step="1"> Па
+                </div>
+            </div>
+        </div>
+
+
+        <div class="win" id="win-s">
+            <div class="str-w">
+                <div class="str">
+                    Количество оборотов вирбели: <input id="verb-r" value="0" type="number" step = "0.01">
+                </div>
+                <div class="str">
+                    Сила натяжения: <input id="force" value="0" type="number"> Н
+                </div>
+
+                <div class="str war">
+                    Предельное значение натяжения: <p id="lim-f">452</p> Н
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    
+    <div class="col">
+        <canvas id="canvas" width="792" height="464">
+        </canvas>
+
+        <div style="text-align: center; display: flex;"> 
+            <div class="peg_control">
+                <span class="arrows" id="left">&#60;</span>
+                <div id="peg">
+                    <p></p>
+                    
+                </div>
+                <span class="arrows" id="right">&#62;</span>
+            </div>       
+
+            
+            <div class="buttons">
+                <div id="press">Нажатие</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="str war" id="imposib" style="color: white;">Невозможно настроить струну до этой ноты по данным характеристикам</div>
+<div class="piano-block" style="display: flex; flex-direction: column; align-items: center;">
+    
+   <div id="note-block">До</div>
+    <ul class="set">
+
+            <li onmousedown="keyPlay('C2')"  onmouseup="keyStop('C2')" onmouseleave="keyStop('C2')" class="white d" id="first-key"></li>
+            <li onmousedown="keyPlay('C#2')" onmouseup="keyStop('C#2')" class="black ds"></li>
+            <li onmousedown="keyPlay('D2')"  onmouseup="keyStop('D2')" onmouseleave="keyStop('D2')" class="white d"></li>
+            <li onmousedown="keyPlay('D#2')"  onmouseup="keyStop('D#2')" onmouseleave="keyStop('D#2')" class="black cs"></li>
+            <li onmousedown="keyPlay('E2')"  onmouseup="keyStop('E2')" onmouseleave="keyStop('E2')" class="white c"></li>
+            
+            <li onmousedown="keyPlay('F2')"  onmouseup="keyStop('F2')" onmouseleave="keyStop('F2')" class="white b"></li>
+            <li onmousedown="keyPlay('F#2')"  onmouseup="keyStop('F#2')" onmouseleave="keyStop('F#2')" class="black as"></li>
+            <li onmousedown="keyPlay('G2')"  onmouseup="keyStop('G2')" onmouseleave="keyStop('G2')" class="white a"></li>
+            <li onmousedown="keyPlay('G#2')"  onmouseup="keyStop('G#2')" onmouseleave="keyStop('G#2')" class="black gs"></li>
+            <li onmousedown="keyPlay('A2')"  onmouseup="keyStop('A2')" onmouseleave="keyStop('A2')" class="white g"></li>
+            <li onmousedown="keyPlay('A#2')"  onmouseup="keyStop('A#2')" onmouseleave="keyStop('A#2')" class="black fs"></li>
+            <li onmousedown="keyPlay('B2')"  onmouseup="keyStop('B2')" onmouseleave="keyStop('B2')" class="white f"></li>
+
+
+    
+      
+            <li onmousedown="keyPlay('C3')"  onmouseup="keyStop('C3')" onmouseleave="keyStop('C3')" class="white d"></li>
+            <li onmousedown="keyPlay('C#3')" onmouseup="keyStop('C#3')" class="black ds"></li>
+            <li onmousedown="keyPlay('D3')"  onmouseup="keyStop('D3')" onmouseleave="keyStop('D3')" class="white d"></li>
+            <li onmousedown="keyPlay('D#3')"  onmouseup="keyStop('D#3')" onmouseleave="keyStop('D#3')" class="black cs"></li>
+            <li onmousedown="keyPlay('E3')"  onmouseup="keyStop('E3')" onmouseleave="keyStop('E3')" class="white c"></li>
+            
+            <li onmousedown="keyPlay('F3')"  onmouseup="keyStop('F3')" onmouseleave="keyStop('F3')" class="white b"></li>
+            <li onmousedown="keyPlay('F#3')"  onmouseup="keyStop('F#3')" onmouseleave="keyStop('F#3')" class="black as"></li>
+            <li onmousedown="keyPlay('G3')"  onmouseup="keyStop('G3')" onmouseleave="keyStop('G3')" class="white a"></li>
+            <li onmousedown="keyPlay('G#3')"  onmouseup="keyStop('G#3')" onmouseleave="keyStop('G#3')" class="black gs"></li>
+            <li onmousedown="keyPlay('A3')"  onmouseup="keyStop('A3')" onmouseleave="keyStop('A3')" class="white g"></li>
+            <li onmousedown="keyPlay('A#3')"  onmouseup="keyStop('A#3')" onmouseleave="keyStop('A#3')" class="black fs"></li>
+            <li onmousedown="keyPlay('B3')"  onmouseup="keyStop('B3')" onmouseleave="keyStop('B3')" class="white f"></li>
+
+
+
+            <li onmousedown="keyPlay('C4')"  onmouseup="keyStop('C4')" onmouseleave="keyStop('C4')" class="white d"></li>
+            <li onmousedown="keyPlay('C#4')" onmouseup="keyStop('C#4')" class="black ds"></li>
+            <li onmousedown="keyPlay('D4')"  onmouseup="keyStop('D4')" onmouseleave="keyStop('D4')" class="white d"></li>
+            <li onmousedown="keyPlay('D#4')"  onmouseup="keyStop('D#4')" onmouseleave="keyStop('D#4')" class="black cs"></li>
+            <li onmousedown="keyPlay('E4')"  onmouseup="keyStop('E4')" onmouseleave="keyStop('E4')" class="white c"></li>
+            
+            <li onmousedown="keyPlay('F4')"  onmouseup="keyStop('F4')" onmouseleave="keyStop('F4')" class="white b"></li>
+            <li onmousedown="keyPlay('F#4')"  onmouseup="keyStop('F#4')" onmouseleave="keyStop('F#4')" class="black as"></li>
+            <li onmousedown="keyPlay('G4')"  onmouseup="keyStop('G4')" onmouseleave="keyStop('G4')" class="white a"></li>
+            <li onmousedown="keyPlay('G#4')"  onmouseup="keyStop('G#4')" onmouseleave="keyStop('G#4')" class="black gs"></li>
+            <li onmousedown="keyPlay('A4')"  onmouseup="keyStop('A4')" onmouseleave="keyStop('A4')" class="white g"></li>
+            <li onmousedown="keyPlay('A#4')"  onmouseup="keyStop('A#4')" onmouseleave="keyStop('A#4')" class="black fs"></li>
+            <li onmousedown="keyPlay('B4')"  onmouseup="keyStop('B4')" onmouseleave="keyStop('B4')" class="white f"></li>
+
+
+
+            <li onmousedown="keyPlay('C5')"  onmouseup="keyStop('C5')" onmouseleave="keyStop('C5')" class="white d"></li>
+            <li onmousedown="keyPlay('C#5')" onmouseup="keyStop('C#5')" class="black ds"></li>
+            <li onmousedown="keyPlay('D5')"  onmouseup="keyStop('D5')" onmouseleave="keyStop('D5')" class="white d"></li>
+            <li onmousedown="keyPlay('D#5')"  onmouseup="keyStop('D#5')" onmouseleave="keyStop('D#5')" class="black cs"></li>
+            <li onmousedown="keyPlay('E5')"  onmouseup="keyStop('E5')" onmouseleave="keyStop('E5')" class="white c"></li>
+            
+            <li onmousedown="keyPlay('F5')"  onmouseup="keyStop('F5')" onmouseleave="keyStop('F5')" class="white b"></li>
+            <li onmousedown="keyPlay('F#5')"  onmouseup="keyStop('F#5')" onmouseleave="keyStop('F#5')" class="black as"></li>
+            <li onmousedown="keyPlay('G5')"  onmouseup="keyStop('G5')" onmouseleave="keyStop('G5')" class="white a"></li>
+            <li onmousedown="keyPlay('G#5')"  onmouseup="keyStop('G#5')" onmouseleave="keyStop('G#5')" class="black gs"></li>
+            <li onmousedown="keyPlay('A5')"  onmouseup="keyStop('A5')" onmouseleave="keyStop('A5')" class="white g"></li>
+            <li onmousedown="keyPlay('A#5')"  onmouseup="keyStop('A#5')" onmouseleave="keyStop('A#5')" class="black fs"></li>
+            <li onmousedown="keyPlay('B5')"  onmouseup="keyStop('B5')" onmouseleave="keyStop('B5')" class="white f"></li>
+
+            
+            <li onmousedown="keyPlay('C6')"  onmouseup="keyStop('C6')" onmouseleave="keyStop('C6')" class="white d"></li>
+            <li onmousedown="keyPlay('C#6')" onmouseup="keyStop('C#6')" class="black ds"></li>
+            <li onmousedown="keyPlay('D6')"  onmouseup="keyStop('D6')" onmouseleave="keyStop('D6')" class="white d"></li>
+            <li onmousedown="keyPlay('D#6')"  onmouseup="keyStop('D#6')" onmouseleave="keyStop('D#6')" class="black cs"></li>
+            <li onmousedown="keyPlay('E6')"  onmouseup="keyStop('E6')" onmouseleave="keyStop('E6')" class="white c"></li>
+
+            <li onmousedown="keyPlay('F6')"  onmouseup="keyStop('F6')" onmouseleave="keyStop('F6')" class="white b"></li>
+            <li onmousedown="keyPlay('F#6')"  onmouseup="keyStop('F#6')" onmouseleave="keyStop('F#6')" class="black as"></li>
+            <li onmousedown="keyPlay('G6')"  onmouseup="keyStop('G6')" onmouseleave="keyStop('G6')" class="white a"></li>
+            <li onmousedown="keyPlay('G#6')"  onmouseup="keyStop('G#6')" onmouseleave="keyStop('G#6')" class="black gs"></li>
+            <li onmousedown="keyPlay('A6')"  onmouseup="keyStop('A6')" onmouseleave="keyStop('A6')" class="white g"></li>
+            <li onmousedown="keyPlay('A#6')"  onmouseup="keyStop('A#6')" onmouseleave="keyStop('A#6')" class="black fs"></li>
+            <li onmousedown="keyPlay('B6')"  onmouseup="keyStop('B6')" onmouseleave="keyStop('B6')" class="white f"></li>
+
+          
+      </ul>
+      
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+<script src="src/parametrs.js"></script>
+<script src="src/frequency.js"></script>
+<script src="src/canvas_manager.js"></script>
+<script src="src/piano.js"></script>
+<script src="src/arrow.js"></script>
+<script src="src/peg.js"></script>
+</body>
+</html>

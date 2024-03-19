@@ -1,0 +1,175 @@
+body{
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  
+
+    font-family: "Poor Story", system-ui;
+    font-weight: 400;
+    font-style: normal;
+
+
+    zoom: 80%;
+}
+
+p{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.content{
+    display: flex;
+}
+
+canvas{
+    border: solid;
+    border: 2px solid ;
+}
+
+.win{
+    flex-direction: column;
+    border: 2px solid ;
+    position: relative;
+   
+}
+
+#win-f{
+    width: 539px;
+    height: 187px;
+}
+
+#win-m{
+    width: 539px;
+    height: 249px;
+}
+
+#win-s{
+    width: 539px;
+    height: 185px;
+}
+
+.str-w{
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center
+}
+
+.str{
+    font-size: 24px;
+    margin-top: 10px;
+
+    display: flex; 
+    align-items: center;
+   
+}
+
+.col{
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    margin-left: 10px;
+}
+
+
+.buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+}
+
+#press{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 248px;
+    height: 75px;
+    color: aliceblue;
+    background-color: #D54747;
+
+    border: 3px solid black;
+
+    user-select: none;
+}
+
+#press:active{
+    background-color: #7a1e1e;
+} 
+
+.piano-block{
+    width: 100%;
+   
+    height: 220px;
+
+}
+
+.set{
+    display: flex;
+    justify-content: center;
+}
+
+input[type = number]{
+    width: 70px;
+    margin-left: 10px;
+}
+
+select{
+    width: 150px;
+    margin-left: 10px;
+}
+
+
+.war{
+    color: #D54747;
+}
+
+#note-block{
+    font-size: 24px;
+    border: solid 1px;
+    padding: 10px 0 10px 0;
+    width: 130px;
+    text-align: center;
+}
+
+#peg{
+    border-radius: 100%;
+    background-color: #5F2D08;
+    height: 50px;
+    width: 50px;
+
+    display: flex;        
+  
+    justify-content: center;
+    align-items: center;
+}
+
+
+.peg_control{
+    display: flex;
+    align-items: center;
+}
+
+#peg p{
+    height: 28px;
+    width: 28px;
+    background-color: #91450E;
+    border-radius: 8px;
+}
+
+.arrows{
+    content: "\003C";
+    font-size: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+    
+    user-select: none;
+    cursor: pointer;
+}
+
+#imposib{
+    user-select: none;
+}
